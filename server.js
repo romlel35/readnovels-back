@@ -15,10 +15,10 @@ if(!process.env.HOST_DB) {
 } else {
 	config = require('./config_example');
 }
-const host = process.env.HOST_DB || config.db.host;
-const user = process.env.USER_DB || config.db.user;
-const password = process.env.PASSWORD_DB || config.db.password;
-const db = config.db.database;
+const host = process.env.HOST || config.db.host;
+const user = process.env.USER || config.db.user;
+const password = process.env.PASSWORD || config.db.password;
+const db = process.env.DATABASE_DB ||config.db.database;
 
 
 
