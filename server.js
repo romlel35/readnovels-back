@@ -32,7 +32,7 @@ app.listen(process.env.PORT || 8000, ()=>{
 
 mysql.createConnection({
     host: host,
-    db: "heroku_c0d9dec7f97b9a0",
+    db: db,
     user :user,
     password: password
 
