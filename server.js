@@ -5,10 +5,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 
-app.use(cors());
-app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json());
 
+//on ne met pas nos paramètres de configuration en ligne
 let config;
 if(!process.env.HOST_DB) {
     config = require('./config');
@@ -20,6 +18,9 @@ const user = process.env.USER || config.db.user;
 const password = process.env.PASSWORD || config.db.password;
 const db = process.env.DATABASE_DB ||config.db.database;
 
+app.use(express.static(__dirname + '/public'));
+app.use(cors());
+app.use(bodyParser.json());
 
 
 //On choisi le port
@@ -32,14 +33,14 @@ app.listen(process.env.PORT || 8000, ()=>{
 
 mysql.createConnection({
     host: host,
-    db: db,
+    database: db,
     user :user,
     password: password
 
 }).then((db) => {
     
-    console.log("***Connected to author database***");
-    console.log("****DB **********", db)
+    console.log("***Connected to readnovels database***");
+    //console.log("****DB **********", db)
     //le code ci-dessous permet de rester connecté
     setInterval(async function () {
         let res = await db.query('SELECT 1');
@@ -56,7 +57,17 @@ mysql.createConnection({
     //routes : 
     const authorsRoutes = require("./routes/authorRoutes.js");
     authorsRoutes(app,db);
+ 
+    const authRoutes = require("./routes/authRoutes.js");
+    authRoutes(app);
 
+    const romansRoutes = require("./routes/romansRoutes");
+    romansRoutes(app, db);
 
+    const chapitresRoutes = require("./routes/chapitresRoutes");
+    chapitresRoutes(app, db);
+
+    const readersRoutes = require("./routes/readerRoutes");
+    readersRoutes(app, db);
 })
 

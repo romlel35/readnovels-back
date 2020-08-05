@@ -6,6 +6,10 @@ module.exports = {
         password: "4594ffdc",
         database: "heroku_c0d9dec7f97b9a0",
         port:  3306
+    },
+    token: {
+        secret: "kitty",
+        secret2: "freya"
     }
 
 }
