@@ -1,15 +1,15 @@
 const cors =require("cors");
 const { response } = require("express");
-
+const withAuth = require("../withAuth");
+const withAuthReader = require("../withAuthReader");
 const bodyParser = require("body-parser");
 const stripe = require('stripe')('sk_test_WvJOfwZp9WEwNygwuHXgiwLX');
 
 module.exports = (app, db) => {
 const romanModel = require('../models/romanModel')(db);
-const withAuth = require("../withAuth");
-const withAuthReader = require("../withAuthReader");
+
 app.use(cors());
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 /*var corsOptions = {
     origin: 'http://example.com',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
