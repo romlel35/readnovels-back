@@ -35,7 +35,7 @@ app.listen(process.env.PORT || 8000, ()=>{
 mysql.createConnection({
     host: host,
     database: db,
-    user :user,
+    user :"bd096e7b955682",
     password: password
 
 }).then((db) => {
