@@ -19,7 +19,7 @@ class romanModel{
         console.log("req.body : ",req.body)
       
             
-        return    db.query("INSERT INTO romans  (title, author_id, category, summary, creationTimestamp)  VALUES (?,?,?,?, NOW())", [req.body.title, req.body.author_id, req.body.category, req.body.summary]).then((response) =>{
+        return    db.query("INSERT INTO romans  (title, author_id, category, summary, price, creationTimestamp)  VALUES (?,?,?,?,?, NOW())", [req.body.title, req.body.author_id, req.body.category, req.body.summary, req.body.price]).then((response) =>{
             console.log(response);
             return response;
         })
@@ -107,7 +107,22 @@ class romanModel{
 		.catch((err)=>{
 				return err;
 		})
-	}
+    }
+    /*static updateStatus(user_id, status,price, id) {
+		console.log('***Update status after payement', user_id, status,price, id)
+		return db.query( 'UPDATE roman SET author_id= ?, status = ?, totalAmount = ?  WHERE id= ?', [user_id, status, price, id])
+    	.then((result)=>{
+
+			return result;
+		})
+		.catch((err)=>{
+				return err;
+		})
+    }*/
+    
+
+
+    
 	
 
 

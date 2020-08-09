@@ -2,11 +2,12 @@ const cors =require("cors");
 const { response } = require("express");
 
 const bodyParser = require("body-parser");
-
+const stripe = require('stripe')('sk_test_WvJOfwZp9WEwNygwuHXgiwLX');
 
 module.exports = (app, db) => {
 const romanModel = require('../models/romanModel')(db);
 const withAuth = require("../withAuth");
+const withAuthReader = require("../withAuthReader");
 app.use(cors());
 app.use(bodyParser.json());
 /*var corsOptions = {
@@ -112,6 +113,49 @@ app.delete('/readnovels-rle/romans/delete/:id' , withAuth, async (req, res, next
     }
     console.log("roman : ",roman)
     res.json({status: 200, result: roman})
+})
+
+app.post('/readnovels-rle/romans/payment', withAuthReader, async (req, res, next)=>{
+    console.log("*****Début de la route payment**********")
+    console.log("data: ",req.body)
+    let totalAmount = 0;
+    
+    let result = await Promise.all(req.body.panier.map(async (roman)=>{
+         let romanInfo = await romanModel.getRomanById(roman.id);
+         console.log("romanInfo : ",romanInfo)
+         totalAmount += romanInfo[0].price;
+         console.log('total',totalAmount)
+         if(romanInfo[0].status ==="payed") {
+             res.json({status: 500, msg: "cours déjà pris", roman: romanInfo[0]})
+         }
+     }))
+
+     const paymentIntent = await stripe.paymentIntents.create({
+        amount: totalAmount*100,
+        currency: 'eur',
+        // Verify your integration in this guide by including this parameter
+        metadata: {integration_check: 'accept_a_payment'},
+        receipt_email: req.body.email,
+      });
+      
+      res.json({client_secret: paymentIntent['client_secret']})
+    
+})
+
+app.put('/readnovels-rle/romans/validate', withAuthReader, async (req, res, next)=>{
+    console.log("**********Début de la route Validate************")
+    console.log(req.body)
+
+    let result = await Promise.all(req.body.panier.map(async (roman)=>{
+         let romanInfo = await romanModel.getRomanById(roman.id);
+         let total = ((moment(romanInfo[0].end) - moment(romanInfo[0].start))/ 3600000 ) * romanInfo[0].tjm
+         console.log(romanInfo)
+
+         //A voir si al ligne en-dessous est necessaisre
+         //let updateroman = await romanModel.updateStatus(req.body.user_id, "payed", total , roman.id)
+     }))
+
+    res.json({status: 200, msg: "paiement validé"})
 })
 
 }
