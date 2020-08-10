@@ -3,7 +3,7 @@ const { response } = require("express");
 const withAuth = require("../withAuth");
 const withAuthReader = require("../withAuthReader");
 const bodyParser = require("body-parser");
-const stripe = require('stripe')('sk_test_WvJOfwZp9WEwNygwuHXgiwLX');
+const stripe = require('stripe')('sk_test_51GxqC2LdwUClRI7SMSP0sysi9JMyNRwatJzO9wgW6FdSR1yftdR9oyYFXUlqgMsiycHgwfdWSoGEC8Y7TeA9Mf1300sIe8NBHf');
 
 module.exports = (app, db) => {
 const romanModel = require('../models/romanModel')(db);
