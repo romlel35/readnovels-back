@@ -72,7 +72,7 @@ class readerModel{
     static updateImg(req) {
         console.log('**** Debut Model SetImage *****')
         console.log("req.body : ",req.body);
-		return db.query('UPDATE reader SET imgUrl = ? WHERE id = ?', [req.body.imageUrl, req.body.id])
+		return db.query('INSERT INTO SET imgUrl = ? WHERE id = ?', [req.body.imageUrl, req.body.id])
 				.then((result)=>{
 					console.log('resultatttt',result);
 					return result;
@@ -80,8 +80,9 @@ class readerModel{
 				.catch((err)=>{
 					return err;
 				})
-	}
-
+    }
+    
+    
 
 
 

@@ -142,20 +142,34 @@ app.post('/readnovels-rle/romans/payment', withAuthReader, async (req, res, next
     
 })
 
-app.put('/readnovels-rle/romans/validate', withAuthReader, async (req, res, next)=>{
+app.post('/readnovels-rle/romans/validate', withAuthReader, async (req, res, next)=>{
     console.log("**********Début de la route Validate************")
     console.log(req.body)
 
     let result = await Promise.all(req.body.panier.map(async (roman)=>{
-         let romanInfo = await romanModel.getRomanById(roman.id);
-         let total = ((moment(romanInfo[0].end) - moment(romanInfo[0].start))/ 3600000 ) * romanInfo[0].tjm
+         let romanInfo = await romanModel.addOrder(roman.id,req.body.reader_id);
+        
          console.log(romanInfo)
 
-         //A voir si al ligne en-dessous est necessaisre
-         //let updateroman = await romanModel.updateStatus(req.body.user_id, "payed", total , roman.id)
+        
      }))
 
     res.json({status: 200, msg: "paiement validé"})
+})
+
+app.get('/readnovels-rle/romans/getAllByReaderId/:id', async (req, res, next) =>{
+    console.log("**********Début de la route getAll By Reader Id************");
+    let id = req.params.id;
+    let romans = await romanModel.getRomansByReaderId(id);
+    if(romans.code){
+
+        res.json({status: 500, msg: "problème lors de la récupération des romans de la bibliothèque"});
+
+        
+    }
+
+    res.json({status: 200 , msg: "récupération des livres réussi : )"})
+
 })
 
 }

@@ -108,22 +108,38 @@ class romanModel{
 				return err;
 		})
     }
-    /*static updateStatus(user_id, status,price, id) {
-		console.log('***Update status after payement', user_id, status,price, id)
-		return db.query( 'UPDATE roman SET author_id= ?, status = ?, totalAmount = ?  WHERE id= ?', [user_id, status, price, id])
-    	.then((result)=>{
 
-			return result;
-		})
-		.catch((err)=>{
-				return err;
-		})
-    }*/
+    static addOrder(roman_id, reader_id) {
+    console.log('**** Debut Model AddToLibrary *****')
+      console.log("roman_id et read_id : "+roman_id+ " "+ reader_id)
+        
+      return db.query('INSERT INTO booksowned  (roman_id, reader_id, creationTimestamp)  VALUES (?,?,NOW())',[roman_id, reader_id]).then((result)=>{
+					console.log('resultatttt',result);
+					return result;
+				})
+				.catch((err)=>{
+					return err;
+				})
+	}
+
     
+  
 
 
     
-	
+	static   getRomansByReaderId(id){
+        console.log("***Début Model   getRomansByReaderId*****");
+       console.log("id : ",id)
+        return db.query("SELECT * from romans r inner join booksowned b WHERE r.id = b.roman_id AND b.reader_id =?",[id])
+        .then((response) =>{
+            console.log("réponse du model : ",response)
+            return response;
+        })
+        .catch((error)=>{
+            console.log("error : ", error);
+            return error;
+        })
+    }
 
 
 
