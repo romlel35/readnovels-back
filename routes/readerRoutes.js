@@ -87,7 +87,7 @@ app.post("/readnovels-rle/readers/login", async (req, res, next) => {
          })
 
 })
-app.post("/readnovels-rle/readers/update", async (req,res,next) =>{
+app.put("/readnovels-rle/readers/update", async (req,res,next) =>{
 
 
     console.log("******Début de la route update reader**********");
