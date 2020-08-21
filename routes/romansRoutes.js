@@ -163,7 +163,7 @@ app.get('/readnovels-rle/romans/getAllByReaderId/:id', async (req, res, next) =>
     let romans = await romanModel.getRomansByReaderId(id);
     if(romans.code){
 
-        res.json({status: 500, msg: "problème lors de la récupération des romans de la bibliothèque"});
+        res.json({status: 500, msg: "problème lors de la récupération des romans de la bibliothèque", romans: romans});
 
         
     }
