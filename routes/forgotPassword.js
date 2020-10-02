@@ -87,7 +87,7 @@ module.exports = (app,db) => {
           text:
             'Vous recevez ceci car vous ou autre a demandé un nouveau mot de passe.\n\n'
             + 'Vous êtes priez de cliquer sur ce lien dans moins de 1 heure:\n\n'
-            + `http://localhost:3000/reset/${token}\n\n`
+            + `https://readnovels.herokuapp.com/reset/${token}\n\n`
             + "Si ce n'est pas vous qui êtes à,l'origine de ce message, ne cliquez pas. .\n",
         };
 
