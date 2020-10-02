@@ -10,6 +10,11 @@ module.exports = {
     token: {
         secret: "kitty",
         secret2: "freya"
+    },
+    mail:{
+        id:"romlel35.dev@gmail.com",
+        password:"Banyaah99",
+
     }
 
 }

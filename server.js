@@ -70,5 +70,11 @@ mysql.createConnection({
 
     const readersRoutes = require("./routes/readerRoutes");
     readersRoutes(app, db);
+
+    const forgotPasswordRoutes = require("./routes/forgotPassword");
+    forgotPasswordRoutes(app, db);
+
+    const resetPasswordRoutes = require("./routes/reset");
+    resetPasswordRoutes(app, db);
 })
 
