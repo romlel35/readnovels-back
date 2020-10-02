@@ -43,7 +43,8 @@ if(!process.env.HOST_DB) {
 }
 
 const nodemailer = require('nodemailer');
-const mailDev = config.mail;
+const mailDev = process.env.mailDev ||config.mail;
+
 
 module.exports = (app,db) => {
   const crypto = require('crypto');
