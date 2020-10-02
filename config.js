@@ -11,7 +11,7 @@ module.exports = {
         secret: "kitty",
         secret2: "freya"
     },
-    mailPassword="Banyaah99"
+    mailPassword:"Banyaah99"
        
 
     
