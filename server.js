@@ -19,10 +19,15 @@ const password = process.env.PASSWORD || config.db.password;
 const db = process.env.DATABASE_DB ||config.db.database;
 
 app.use(express.static(__dirname + '/public'));
-app.use(cors());
+
 app.use(bodyParser.json());
 
+var corsOptions = {
+    origin: 'https:/readnovels-front.herokuapp.com',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
 
+  app.use(cors(corsOptions));
 //On choisi le port
 const PORT = 8000;
 app.listen(process.env.PORT || 8000, ()=>{
