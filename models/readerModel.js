@@ -54,6 +54,38 @@ class readerModel{
             return error;
         })
     }
+
+    static getReaderByPasswordToken(token){
+        console.log("***Début Model GetReaderByPasswordToken*****");
+       let date  = new Date();
+      console.log("token : ",token)
+        return db.query("SELECT * from reader WHERE resetPasswordToken=?",[token])
+        .then((response) =>{
+            console.log("response : ",response)
+            let diff= dateDiff(response[0].resetPasswordExpires, date)
+            if(diff.hour < 1){
+               
+                console.log("**** diif.hour : ",diff.hour);
+                console.log("**** diif.day : ",diff.day)
+                console.log("****date : ",date)
+                return response;
+            }
+            else{
+                
+                console.log("**** diif.hour : ",diff.hour);
+                console.log("**** diif.day : ",diff.day)
+                console.log("****date : ",date)
+                return ;
+            }
+           
+            
+        })
+        .catch((error)=>{
+            console.log("error : ", error);
+            return error;
+        })
+    }
+
     static updateReader(req){
         console.log("***Début du Model updatereader***");
        // console.log(db);
@@ -69,6 +101,39 @@ class readerModel{
             return error;
         })
     }
+
+    static updateResetToken(email,token){
+        console.log("***Début du Model updatResetPassword***");
+       // console.log(db);
+       // console.log("req.body : ",req.body)
+       let date = new Date();
+            
+        return    db.query("UPDATE reader  SET resetPasswordToken=?, resetPasswordExpires=?  WHERE email=?", [token, date, email]).then((response) =>{
+            console.log(response);
+            return response;
+        })
+        .catch((error)=>{
+            console.log("error : ", error);
+            return error;
+        })
+    }
+
+    static updatePassword(hashedPassword, email){
+        console.log("***Début du Model updatePassword***");
+      
+        console.log("hashed password", hashedPassword)
+       
+            
+        return    db.query("UPDATE reader  SET password=?  WHERE email=?", [hashedPassword, email]).then((response) =>{
+            console.log(response);
+            return response;
+        })
+        .catch((error)=>{
+            console.log("error : ", error);
+            return error;
+        })
+    }
+
     static updateImg(req) {
         console.log('**** Debut Model SetImage *****')
         console.log("req.body : ",req.body);

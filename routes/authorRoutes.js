@@ -9,6 +9,7 @@ const secret = "kitty";
 
 module.exports = (app, db) => {
     const authorModel = require('../models/authorModel')(db);
+    const readerModel = require("../models/readerModel")(db);
     const withAuth = require("../withAuth");
     app.use(cors());
     app.use(bodyParser.json());
@@ -100,13 +101,24 @@ module.exports = (app, db) => {
         console.log("*****Déébut de la route update password*******")
         console.log("req.body : ",req.body)
         bcrypt.hash(req.body.password, salt).then((hashedPassword) =>{
-            
-            let author = authorModel.updatePassword(hashedPassword,req.body.email)
-            if(author.code){
-                return res.json({status: 500, msg: "problème lors de la maj du mot de passe"})
+            if(req.body.role === "auteur"){
+                let author = authorModel.updatePassword(hashedPassword,req.body.email)
+                if(author.code){
+                    return res.json({status: 500, msg: "problème lors de la maj du mot de passe"})
+                }
+                return res.json({status: 200, msg :"Ok le mot de passe a été mis à jour"})
+    
+                
             }
-            return res.json({status: 200, msg :"Ok le mot de passe a été mis à jour"})
-
+            else{
+                let reader = readerModel.updatePassword(hashedPassword,req.body.email)
+                if(reader.code){
+                    return res.json({status: 500, msg: "problème lors de la maj du mot de passe"})
+                }
+                return res.json({status: 200, msg :"Ok le mot de passe a été mis à jour"})
+    
+            }
+           
         })
     })
 

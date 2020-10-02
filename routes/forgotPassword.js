@@ -48,6 +48,7 @@ const mailDev = config.mail;
 module.exports = (app,db) => {
   const crypto = require('crypto');
   const authorModel = require('../models/authorModel')(db);
+  const readerModel = require('../models/readerModel')(db);
 
   app.post('/forgotPassword', (req, res) => {
 
@@ -57,18 +58,29 @@ module.exports = (app,db) => {
     }
     console.log(req.body.email);
     let email = req.body.email;
-    let author = authorModel.getAuthorByEmail(req);
-    if(author.length === 0){
-        res.json({status: 404, msg: 'Pas dauteur avec ce mail'});
+    let user = authorModel.getAuthorByEmail(req);
+    let role = "author";
+    if(user.length === 0){
 
+      role = "reader";
+      user = await readerModel.getReaderByEmail(req);
+      if(user.length === 0){
+        res.json({status: 404, msg: "Pas d'utilisateur avec ce mail"});
+      }
     }
         let userEmail = req.body.email;
     
         const token = crypto.randomBytes(20).toString('hex');
       
-        
-        let updateResetPasswordToken = authorModel.updateResetToken(email,token);
+        if (role === "author"){
+          let updateResetPasswordToken = authorModel.updateResetToken(email,token);
 
+        }
+        else{
+          let updateResetPasswordToken = readerModel.updateResetToken(email,token);
+
+        }
+       
         const transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
