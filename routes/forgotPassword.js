@@ -43,7 +43,8 @@ if(!process.env.HOST_DB) {
 }
 
 const nodemailer = require('nodemailer');
-const mailDev = process.env.mailDev ||config.mail;
+const { getMaxListeners } = require('process');
+const mailDev = process.env.mailPassword ||config.mailPassword;
 
 
 module.exports = (app,db) => {
@@ -85,8 +86,8 @@ module.exports = (app,db) => {
         const transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
-            user: mailDev.id,
-            pass: mailDev.password,
+            user: "romlel35.dev@gmail.com",
+            pass: mailDev,
           },
           tls: {
             rejectUnauthorized: false
