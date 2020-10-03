@@ -99,7 +99,7 @@ class authorModel{
         })
         .catch((error)=>{
             console.log("error : ", error);
-            return error;
+            return ;// a voir si j'ai besoin de remettre l'erreur
         })
     }
     static updateAuthor(req){
