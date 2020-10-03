@@ -52,7 +52,7 @@ module.exports = (app,db) => {
   const authorModel = require('../models/authorModel')(db);
   const readerModel = require('../models/readerModel')(db);
 
-  app.post('/forgotPassword', async (req, res) => {
+  app.post('/forgotPassword', async  (req, res) => {
 
     console.log("****Début route forgotPssword********")
     if (req.body.email === '') {
@@ -64,11 +64,11 @@ module.exports = (app,db) => {
     let role = "author";
     console.log("test1");
     console.log("user ",user)
-    if(user.length === undefined){
+    if(user.length === 0){
       console.log("test2");
       role = "reader";
       user =  await readerModel.getReaderByEmail(req);
-      if(user.length === undefined){
+      if(user.length === 0){
         console.log("test3");
         return res.json({status: 404, msg: "Pas d'utilisateur avec ce mail"});
       }
