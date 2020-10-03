@@ -60,14 +60,14 @@ module.exports = (app,db) => {
     }
     console.log(req.body.email);
     let email = req.body.email;
-    let user = authorModel.getAuthorByEmail(req);
+    let user = await authorModel.getAuthorByEmail(req);
     let role = "author";
     console.log("test1");
-    console.log("user.length: ",user.length)
+    console.log("user ",user)
     if(user.length === undefined){
       console.log("test2");
       role = "reader";
-      user =  readerModel.getReaderByEmail(req);
+      user =  await readerModel.getReaderByEmail(req);
       if(user.length === undefined){
         console.log("test3");
         return res.json({status: 404, msg: "Pas d'utilisateur avec ce mail"});

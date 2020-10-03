@@ -51,7 +51,7 @@ class authorModel{
         //console.log("req.body : ",req.body);
         return db.query("SELECT * from author WHERE email=?",[req.body.email])
         .then((response) =>{
-           // console.log(response);
+         console.log(response);
             return response;
         })
         .catch((error)=>{
