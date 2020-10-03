@@ -79,21 +79,29 @@ class authorModel{
         return db.query("SELECT * from author WHERE resetPasswordToken=?",[token])
         .then((response) =>{
             console.log("response : ",response)
-            let diff= dateDiff(response[0].resetPasswordExpires, date)
-            if(diff.hour < 1){
-               
-                console.log("**** diif.hour : ",diff.hour);
-                console.log("**** diif.day : ",diff.day)
-                console.log("****date : ",date)
-                return response;
+
+            if (response.length === 0){
+
+                return;
             }
             else{
-                
-                console.log("**** diif.hour : ",diff.hour);
-                console.log("**** diif.day : ",diff.day)
-                console.log("****date : ",date)
-                return ;
+                let diff= dateDiff(response[0].resetPasswordExpires, date)
+                if(diff.hour < 1){
+                   
+                    console.log("**** diif.hour : ",diff.hour);
+                    console.log("**** diif.day : ",diff.day)
+                    console.log("****date : ",date)
+                    return response;
+                }
+                else{
+                    
+                    console.log("**** diif.hour : ",diff.hour);
+                    console.log("**** diif.day : ",diff.day)
+                    console.log("****date : ",date)
+                    return ;
+                }
             }
+           
            
             
         })
