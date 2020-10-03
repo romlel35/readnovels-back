@@ -64,11 +64,11 @@ module.exports = (app,db) => {
     let role = "author";
     console.log("test1");
     console.log("user.length: ",user.length)
-    if(user.code){
+    if(user.length === undefined){
       console.log("test2");
       role = "reader";
       user =  readerModel.getReaderByEmail(req);
-      if(user.code){
+      if(user.length === undefined){
         console.log("test3");
         return res.json({status: 404, msg: "Pas d'utilisateur avec ce mail"});
       }
