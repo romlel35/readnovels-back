@@ -12,10 +12,10 @@ module.exports = (app,db)  =>{
         let token = req.params.token;
        let user = await authorModel.getAuthorByPasswordToken(token);
        console.log("author : ", author)
-       if(user.code){
+       if(user.length === 0){
 
-            let user = await readerModel.getReaderByPasswordToken(token);
-            if (user.code) {
+             user = await readerModel.getReaderByPasswordToken(token);
+            if (user.length === 0) {
                 return res.json({status: 500, msg: " Le lien de récupération est invalide ou le temps a été dépassé"})
         
             }
