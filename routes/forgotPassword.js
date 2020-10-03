@@ -67,7 +67,7 @@ module.exports = (app,db) => {
       role = "reader";
       user =  readerModel.getReaderByEmail(req);
       if(user.length === 0){
-        res.json({status: 404, msg: "Pas d'utilisateur avec ce mail"});
+        return res.json({status: 404, msg: "Pas d'utilisateur avec ce mail"});
       }
     }
         let userEmail = req.body.email;
