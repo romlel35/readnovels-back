@@ -11,7 +11,7 @@ module.exports = (app,db)  =>{
         console.log("req.body : ",req.params);
         let token = req.params.token;
        let user = await authorModel.getAuthorByPasswordToken(token);
-       console.log("author : ", author)
+      
        if(user.length === 0){
 
              user = await readerModel.getReaderByPasswordToken(token);
