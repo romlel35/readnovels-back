@@ -62,11 +62,14 @@ module.exports = (app,db) => {
     let email = req.body.email;
     let user = authorModel.getAuthorByEmail(req);
     let role = "author";
+    console.log("test1");
+    console.log("user.length: ",user)
     if(user.length === 0){
-
+      console.log("test2");
       role = "reader";
       user =  readerModel.getReaderByEmail(req);
       if(user.length === 0){
+        console.log("test3");
         return res.json({status: 404, msg: "Pas d'utilisateur avec ce mail"});
       }
     }
