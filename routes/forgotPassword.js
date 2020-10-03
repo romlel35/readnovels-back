@@ -52,11 +52,11 @@ module.exports = (app,db) => {
   const authorModel = require('../models/authorModel')(db);
   const readerModel = require('../models/readerModel')(db);
 
-  app.post('/forgotPassword', (req, res) => {
+  app.post('/forgotPassword', async (req, res) => {
 
     console.log("****Début route forgotPssword********")
     if (req.body.email === '') {
-      res.status(400).send('email required');
+     return res.status(400).send('email required');
     }
     console.log(req.body.email);
     let email = req.body.email;
