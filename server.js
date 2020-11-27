@@ -30,8 +30,6 @@ app.listen(process.env.PORT || 8000, ()=>{
 })
  
 
-
-
 mysql.createConnection({
     host: host,
     database: db,
